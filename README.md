@@ -45,5 +45,32 @@ The application is built using client side Blazor and includes:
 
 
 ## Usage
+## Project Status
+Project is: _in progress_.
+
+
+## Room for Improvement
+
+
+
+## Acknowledgements
+
+- This project was inspired by [Google](https://code.google.com/archive/p/improved-help-desk-workflow/). 
+- This project was based on [this tutorial](https://app.pluralsight.com/projects/building-bug-tracking-app-with-blazor).
+- Many thanks to Alex Wolf
+
+
+## Contact
+Created by [Kenneth Okalang](https://okalangkenneth.com) - feel free to contact me!
+
+
+<!-- Optional -->
+<!-- ## License -->
+<!-- This project is open source and available under the [... License](). -->
+
+<!-- You don't have to include all sections - just the one's relevant to your project -->
+
+
+
 
 
