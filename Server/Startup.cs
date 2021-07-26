@@ -22,7 +22,7 @@ namespace Defect_Tracker.Server
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -32,7 +32,7 @@ namespace Defect_Tracker.Server
             .AddRoles<IdentityRole>() // Add roles.
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // From:https://github.com/dotnet/AspNetCore.Docs/issues/17649
+           
             // Configure identity server to put the role claim into the id token
             // and the access token and prevent the default mapping for roles
             // in the JwtSecurityTokenHandler.
@@ -50,7 +50,10 @@ namespace Defect_Tracker.Server
             services.AddAuthentication()
                     .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddNewtonsoftJson(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddRazorPages();
         }
 

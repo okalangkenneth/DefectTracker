@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Syncfusion.Blazor;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Defect_Tracker.Client
@@ -30,6 +27,10 @@ namespace Defect_Tracker.Client
            Uri(builder.HostEnvironment.BaseAddress));
 
             builder.Services.AddApiAuthorization();
+
+            // Syncfusion support
+            builder.Services.AddSyncfusionBlazor();
+
 
             await builder.Build().RunAsync();
         }
