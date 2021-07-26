@@ -1,6 +1,6 @@
 # DefectTracker
 In this  application the core elements of Blazor are covered and additional features will be applied to buils a bug tracking application.
-The application is be built using client side Blazor and includes:
+The application is built using client side Blazor and includes:
 - Authentication and authorisation, 
 - Inserting, updating, and deleting from a database, 
 - Using forms and validation,
