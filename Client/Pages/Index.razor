@@ -1,0 +1,9 @@
+﻿@page "/"
+
+
+<AuthorizeView Roles="@ADMINISTRATION_ROLE">
+    <p>You are an Administrator</p>
+</AuthorizeView>
+@code {
+    string ADMINISTRATION_ROLE = "Administrators";
+}
