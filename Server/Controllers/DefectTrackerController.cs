@@ -15,11 +15,12 @@ namespace DefectTracker.Server.Controllers
     public class DefectTrackerController : ControllerBase
     {
         private readonly DefecttrackerContext _context;
-        public DefectTrackerController(
-        DefecttrackerContext context)
+        public DefectTrackerController(DefecttrackerContext context)
         {
             _context = context;
         }
+
+
         // Only an Administrator can query.
         [Authorize(Roles = "Administrators")]
         [HttpGet]

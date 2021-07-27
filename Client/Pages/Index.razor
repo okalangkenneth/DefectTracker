@@ -1,9 +1,26 @@
 ﻿@page "/"
-
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Defect_Tracker.Shared
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
 
 <AuthorizeView Roles="@ADMINISTRATION_ROLE">
     <p>You are an Administrator</p>
 </AuthorizeView>
+
+ // Toast component to display a brief pop-up message when a defect is submitted //
+
+<SfToast ID="toast_default" Height="50"
+         @ref="ToastObj"
+         Title="Defect"
+         Content="@ToastContent" TimeOut="5000">
+    <ToastPosition X="Right"></ToastPosition>
+</SfToast>
+
 @code {
     string ADMINISTRATION_ROLE = "Administrators";
+
+    SfToast ToastObj;
+    private string ToastContent { get; set; } = "";
+
 }
