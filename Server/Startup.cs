@@ -26,6 +26,7 @@ namespace Defect_Tracker.Server
        
         public void ConfigureServices(IServiceCollection services)
         {
+            // To access Defect tables
             services.AddDbContext<DefecttrackerContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>() // Add roles.
