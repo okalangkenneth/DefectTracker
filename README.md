@@ -1,5 +1,5 @@
 # DefectTracker
-In this  application the core elements of Blazor are covered and additional features will be applied to buils a bug tracking application.
+In this  application the core elements of Blazor are covered and additional features will be applied to buils a defect tracking application.
 The application is built using client side Blazor and includes:
 - Authentication and authorisation, 
 - Inserting, updating, and deleting from a database, 
@@ -22,9 +22,8 @@ The application is built using client side Blazor and includes:
 
 
 ## General Information
- Bug Tracker allows developers or users of a system to keep track of notable bugs or defects in thier product.
- The time the defect was found and its decription are reported by the application user and the developers will have the opportunity 
- to work on the most urgent ones. 
+ Defect Tracker allows developers or users of a system to keep track of notable defects in thier product.
+ The time the defect was found and its decription are reported by the application user and the and the most urgent ones can be worked on first. 
 
 
 
