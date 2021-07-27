@@ -8,7 +8,7 @@
     <p>You are an Administrator</p>
 </AuthorizeView>
 
- // Toast component to display a brief pop-up message when a defect is submitted //
+
 
 <SfToast ID="toast_default" Height="50"
          @ref="ToastObj"
@@ -17,10 +17,97 @@
     <ToastPosition X="Right"></ToastPosition>
 </SfToast>
 
+<h3>New Defect</h3>
+<br />
+<EditForm ID="new-doctor-form" Model="@objDefect"
+          OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div>
+        <SfDropDownList TItem="DefectStatus" TValue="string"
+                        PopupHeight="230px" Index=0
+                        Placeholder="Defect Status"
+                        DataSource="@DefectStatus.Statuses"
+                        FloatLabelType="@FloatLabelType.Always"
+                        @bind-Value="@objDefect.DefectStatus">
+            <DropDownListFieldSettings Text="Text"
+                                       Value="ID">
+            </DropDownListFieldSettings>
+        </SfDropDownList>
+    </div>
+    <div>
+        <SfDatePicker ID="TicketDate" Placeholder="Ticket Date"
+                      FloatLabelType="@FloatLabelType.Always"
+                      @bind-Value="@objDefect.DefectAt"
+                      Max="DateTime.Now"
+                      ShowClearButton="false"></SfDatePicker>
+        <ValidationMessage For="@(() => objDefect.DefectAt)" />
+    </div>
+    <div>
+        <SfTextBox Placeholder="Ticket Description"
+                   FloatLabelType="@FloatLabelType.Always"
+                   @bind-Value="@objDefect.DefectDescription">
+        </SfTextBox>
+        <ValidationMessage For="@(() =>
+      objDefect.DefectDescription)" />
+     </div>
+     <div>
+        <SfTextBox Placeholder="Reporter Email"
+                   FloatLabelType="@FloatLabelType.Always"
+                   @bind-Value="@objDefect.DefectReporterEmail">
+        </SfTextBox>
+        <ValidationMessage For="@(() =>
+          objDefect.DefectReporterEmail)" />
+    </div>
+    <br /><br />
+    <div class="e-footer-content">
+        <div class="button-container">
+            <button type="submit" class="e-btn e-normal e-primary">Save</button>
+        </div>
+    </div>
+</EditForm>
+
 @code {
     string ADMINISTRATION_ROLE = "Administrators";
 
     SfToast ToastObj;
     private string ToastContent { get; set; } = "";
+
+    // HttpClient to allow anonymous http calls.
+    HttpClient NoAuthenticationClient;
+    // Global property for the Help Desk Ticket.
+    Defect objDefect = new Defect();
+
+    protected override void OnInitialized()
+    {
+        // Create a HttpClient to use for non-authenticated calls.
+        NoAuthenticationClient =
+        ClientFactory.CreateClient(
+        "ServerAPI.NoAuthenticationClient");
+    }
+    public async Task HandleValidSubmit(EditContext context)
+    {
+        try
+        {
+            // Save the new Help Desk Ticket.
+            // Create a new GUID for this Help Desk Ticket.
+            objDefect.DefectGuid =
+            System.Guid.NewGuid().ToString();
+            await NoAuthenticationClient.PostAsJsonAsync(
+            "Defect Tracker", objDefect);
+            // Clear the form.
+            objDefect = new Defect();
+            // Show the Toast.
+            ToastContent = "Saved!";
+            StateHasChanged();
+            await this.ToastObj.Show();
+        }
+        catch (Exception ex)
+        {
+            ToastContent = ex.Message;
+            StateHasChanged();
+            await this.ToastObj.Show();
+        }
+    }
+
 
 }
