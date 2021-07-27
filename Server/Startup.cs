@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using DefectTracker.Server.Data;
 
 namespace Defect_Tracker.Server
 {
@@ -25,9 +26,7 @@ namespace Defect_Tracker.Server
        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DefecttrackerContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>() // Add roles.
             .AddEntityFrameworkStores<ApplicationDbContext>();
