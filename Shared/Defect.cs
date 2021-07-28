@@ -8,15 +8,19 @@ namespace Defect_Tracker.Shared
     public class Defect
     {
         public int Id { get; set; }
+
         [Required]
         public string DefectStatus { get; set; }
+
         [Required]
         public DateTime DefectAt { get; set; }
+
         [Required]
         [StringLength(50, MinimumLength = 2,
 
         ErrorMessage ="Description must be a minimum of 2 and maximum of 50 characters.")]
         public string DefectDescription { get; set; }
+
         [Required]
         [EmailAddress]
         public string DefectReporterEmail { get; set; }

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defect Tracker.Server", "Server\Defect Tracker.Server.csproj", "{1F5AB61A-CA07-46C2-84F9-977A815D1619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defect Tracker.Server", "Server\Defect Tracker.Server.csproj", "{1F5AB61A-CA07-46C2-84F9-977A815D1619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defect Tracker.Client", "Client\Defect Tracker.Client.csproj", "{A363CA87-9C67-49D4-9BA8-AD011A6DDDC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defect Tracker.Client", "Client\Defect Tracker.Client.csproj", "{A363CA87-9C67-49D4-9BA8-AD011A6DDDC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defect Tracker.Shared", "Shared\Defect Tracker.Shared.csproj", "{116CFB0E-12BA-4652-B1FE-E9EC7B33840C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defect Tracker.Shared", "Shared\Defect Tracker.Shared.csproj", "{116CFB0E-12BA-4652-B1FE-E9EC7B33840C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
