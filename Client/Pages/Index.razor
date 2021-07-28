@@ -4,15 +4,18 @@
 @inject HttpClient Http
 @inject IHttpClientFactory ClientFactory
 
+
 <AuthorizeView Roles="@ADMINISTRATION_ROLE">
     <p>You are an Administrator</p>
 </AuthorizeView>
 
-<SfToast ID="toast_default" Height="50"
+<SfToast ID="toast_default"
          @ref="ToastObj"
-         Title="Defect"
-         Content="@ToastContent" TimeOut="5000">
+         Title="Help Desk Ticket"
+         Content="@ToastContent" Timeout="5000">
+
     <ToastPosition X="Right"></ToastPosition>
+
 </SfToast>
 
 <h3>New Defect</h3>
@@ -76,22 +79,24 @@
     protected override void OnInitialized()
     {
         // Create a HttpClient to use for non-authenticated calls.
-        NoAuthenticationClient =
-        ClientFactory.CreateClient(
-        "ServerAPI.NoAuthenticationClient");
+        NoAuthenticationClient = ClientFactory.CreateClient( "ServerAPI.NoAuthenticationClient");
     }
     public async Task HandleValidSubmit(EditContext context)
     {
         try
         {
             // Save the new Defect.
+
             // Create a new GUID for this Defect.
             objDefect.DefectGuid =
             System.Guid.NewGuid().ToString();
+
             await NoAuthenticationClient.PostAsJsonAsync(
             "Defect Tracker", objDefect);
+
             // Clear the form.
             objDefect = new Defect();
+
             // Show the Toast.
             ToastContent = "Saved!";
             StateHasChanged();
