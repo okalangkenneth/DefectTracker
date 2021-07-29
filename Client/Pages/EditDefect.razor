@@ -1,0 +1,118 @@
+﻿
+@using System.Security.Claims;
+@using Syncfusion.Blazor.DropDowns
+@using Defect_Tracker.Shared
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
+
+<div>
+    <SfDropDownList TItem="DefectStatus" Enabled="!isReadOnly"
+                    TValue="string" PopupHeight="230px" Index=0
+                    Placeholder="Ticket Status"
+                    DataSource="@DefectStatus.Statuses"
+                    FloatLabelType="@FloatLabelType.Always"
+                    @bind-Value="@SelectedDefect.DefectStatus">
+        <DropDownListFieldSettings Text="Text"
+                                   Value="ID">
+        </DropDownListFieldSettings>
+    </SfDropDownList>
+</div>
+<div>
+    <SfDatePicker ID="DefectAt" Enabled="!isReadOnly"
+                  Placeholder="Defect Date"
+                  FloatLabelType="@FloatLabelType.Always"
+                  @bind-Value="@SelectedDefect.DefectAt"
+                  Max="DateTime.Now"
+                  ShowClearButton="false">
+    </SfDatePicker>
+</div>
+<div>
+    <SfTextBox Enabled="!isReadOnly" Placeholder="Defect Description"
+               FloatLabelType="@FloatLabelType.Always"
+               @bind-Value="@SelectedDefect.DefectDescription">
+    </SfTextBox>
+</div>
+<div>
+    <SfTextBox Enabled="!isReadOnly" Placeholder="Reporter Email"
+               FloatLabelType="@FloatLabelType.Always"
+               @bind-Value="@SelectedDefect.DefectReporterEmail">
+    </SfTextBox>
+</div>
+@if (SelectedDefect.DefectDetails != null)
+{
+    @if (SelectedDefect.DefectDetails.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var DefectDetail in 
+                    SelectedDefect.DefectDetails)
+                {
+                    <tr>
+                        <td>
+                             @DefectDetail.DefectAt.ToShortDateString()
+                        </td>
+                        <td>
+                            @DefectDetail.DefectDescription
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+     < SfTextBox Placeholder = "NewDefect Detail"
+                 @bind - Value = "@NewDefectDetailText" >
+     </ SfTextBox >
+     < SfButton CssClass = "e-small e-success"
+                 @onclick = "AddDefectDetail" >
+         Add
+     </ SfButton >
+
+ }
+<br />
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    [Parameter]
+    public Defect SelectedDefect { get; set; }
+
+    public bool isReadOnly = true;
+    ClaimsPrincipal CurrentUser = new ClaimsPrincipal();
+
+    string NewDefectDetailText = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the current user.
+        CurrentUser = (await authenticationStateTask).User;
+        // If there is a logged in user
+        // they are an Administrator.
+        // Enable editing.
+        isReadOnly = !CurrentUser.Identity.IsAuthenticated;
+    }
+    private void AddHelpDeskTicketDetail()
+    {
+        // Create New HelpDeskTicketDetails record.
+        DefectDetail NewDefectDetail = new DefectDetail();
+        NewDefectDetail.DefectId = SelectedDefect.Id;
+
+        NewDefectDetail.DefectAt = DateTime.Now;
+
+        NewDefectDetail.DefectDescription =  NewDefectDetailText;
+
+        // Add to collection.
+        SelectedDefect.DefectDetails
+        .Add(NewDefectDetail);
+
+        // Clear the Text Box.
+        NewDefectDetailText = "";
+    }
+}
+
+

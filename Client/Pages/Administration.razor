@@ -1,0 +1,152 @@
+﻿
+@page "/administration"
+@using Defect_Tracker.Shared
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
+
+@*AuthorizeView control ensures that *@
+@*Only users in the Administrators role can view this content*@
+
+<AuthorizeView Roles="Administrators">
+    <div>
+        <div id="target" style="height: 500px;">
+            <SfGrid ID="Grid"
+
+                    @ref="gridObj"
+
+                    DataSource="@colDefects"
+                    AllowPaging="true"
+                    AllowSorting="true"
+                    AllowResizing="true"
+                    AllowReordering="true">
+                <SfDataManager Url="Defect Tracker" Adaptor="Adaptors.WebApiAdaptor">
+                </SfDataManager>
+                <GridPageSettings PageSize="5"></GridPageSettings>
+                <GridEvents CommandClicked="OnCommandClicked"
+                            TValue="Defect">
+                </GridEvents>
+                <GridColumns>
+                    <GridColumn HeaderText="" TextAlign="TextAlign.Left" Width="150">
+                        <GridCommandColumns>
+                            <GridCommandColumn Type=CommandButtonType.Edit
+                                               ButtonOption="@(new CommandButtonOptions()
+                                               { Content = "Edit" })">
+                            </GridCommandColumn>
+                            <GridCommandColumn Type=CommandButtonType.Delete
+                                               ButtonOption="@(new CommandButtonOptions()
+                                               { Content = "Delete" })">
+                            </GridCommandColumn>
+                        </GridCommandColumns>
+                    </GridColumn>
+                    <GridColumn IsPrimaryKey="true" Field=@nameof(Defect.Id)
+                                HeaderText="ID #" TextAlign="@TextAlign.Left"
+                                Width="70">
+                    </GridColumn>
+                    <GridColumn Field=@nameof(Defect.DefectStatus)
+                                HeaderText="Status" TextAlign="@TextAlign.Left"
+                                Width="80">
+                    </GridColumn>
+                    <GridColumn Field=@nameof(Defect.DefectAt)
+                                HeaderText="Date" TextAlign="@TextAlign.Left"
+                                Width="80">
+                    </GridColumn>
+                    <GridColumn Field=@nameof(Defect.DefectDescription)
+                                HeaderText="Description" TextAlign="@TextAlign.Left"
+                                Width="150">
+                    </GridColumn>
+                    <GridColumn Field=@nameof(Defect.DefectReporterEmail)
+                                HeaderText="Reporter" TextAlign="@TextAlign.Left"
+                                Width="150">
+                    </GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+    <SfDialog Target="#target"
+              Width="100px"
+              Height="130px"
+              IsModal="true"
+              ShowCloseIcon="false"
+              @bind-Visible="DeleteRecordConfirmVisibility">
+        <DialogTemplates>
+            <Header> DELETE RECORD ? </Header>
+            <Content>
+                <div class="button-container">
+                    <button type="submit"
+                            class="e-btn e-normal e-primary"
+                            @onclick="ConfirmDeleteYes">
+                        Yes
+                    </button>
+                    <button type="submit"
+                            class="e-btn e-normal"
+                            @onclick="ConfirmDeleteNo">
+                        No
+                    </button>
+                </div>
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+
+</AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    SfGrid<Defect> gridObj;
+
+    // SfDataManager calls the Get method in the DefectTracker 
+    // controller in the server project that the
+    // SfGrid will use to only pull records for the
+    // page that is currently selected.
+    public IQueryable<Defect> colDefects { get; set; }
+
+    // Global property for the Defect.
+    private Defect SelectedDefect = new Defect();
+
+    // Property to control the delete dialog.
+    public bool DeleteRecordConfirmVisibility { get; set; } = false;
+
+
+    public async void OnCommandClicked(CommandClickEventArgs<Defect> args)
+    {
+        if (args.CommandColumn.ButtonOption.Content == "Delete")
+        {
+            // We only need the TicketGuid
+            // of the selected Help Desk Ticket.
+
+            SelectedDefect = new Defect();
+            SelectedDefect.DefectGuid = args.RowData.DefectGuid;
+
+            // Open Delete confirmation dialog.
+            this.DeleteRecordConfirmVisibility = true;
+            StateHasChanged();
+        }
+
+
+    }
+
+    public async void ConfirmDeleteYes()
+    {
+        // The user selected Yes to delete the
+        // selected Help Desk Ticket.
+        // Delete the record.
+        await Http.DeleteAsync("Defect_Tracker? DefectGuid=" +
+        SelectedDefect.DefectGuid);
+
+        // Close the dialog.
+        this.DeleteRecordConfirmVisibility = false;
+        StateHasChanged();
+
+        // Refresh the SfGrid
+        // so the deleted record will not show.
+        gridObj.Refresh();
+    }
+    public void ConfirmDeleteNo()
+    {
+        // Open the dialog
+        // to give the user a chance
+        // to confirm they want to delete the record.
+        this.DeleteRecordConfirmVisibility = false;
+    }
+}
