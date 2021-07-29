@@ -1,5 +1,5 @@
 # DefectTracker
-In this  application the core elements of Blazor are covered and additional features will be applied to buils a defect tracking application.
+In this  application the core elements of Blazor are covered and additional features will be applied to build a defect tracking application.
 The application is built using client side Blazor and includes:
 - Authentication and authorisation, 
 - Inserting, updating, and deleting from a database, 
@@ -22,9 +22,8 @@ The application is built using client side Blazor and includes:
 
 
 ## General Information
- Defect Tracker allows developers or users of a system to keep track of notable defects in thier product.
- The time the defect was found and its decription are reported by the application user and the and the most urgent ones can be worked on first. 
-
+ Defect Tracker allows users of a system to keep track of notable defects during the project development process.
+ The time the defect was found and its decription are reported by the application user and the most urgent ones can be worked on first by the development team.  Defect Tracker can be customized to one's needs.This could be for example in tracking bugs in software development, in the manufacturing sector, or for delivery notifications.
 
 
 ## Technologies Used
@@ -54,7 +53,7 @@ Project is: _in progress_.
 
 ## Acknowledgements
 
-- This project was inspired by [Google](https://code.google.com/archive/p/improved-help-desk-workflow/). 
+- This project was inspired by [Jira](https://www.atlassian.com/software/jira). 
 - This project was based on [this tutorial](https://app.pluralsight.com/projects/building-bug-tracking-app-with-blazor).
 - Many thanks to Alex Wolf
 
