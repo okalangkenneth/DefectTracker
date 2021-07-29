@@ -53,7 +53,7 @@ Project is: _in progress_.
 
 ## Acknowledgements
 
-- This project was inspired by [Google](https://code.google.com/archive/p/improved-help-desk-workflow/). 
+- This project was inspired by [Jira](https://www.atlassian.com/software/jira). 
 - This project was based on [this tutorial](https://app.pluralsight.com/projects/building-bug-tracking-app-with-blazor).
 - Many thanks to Alex Wolf
 
