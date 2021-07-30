@@ -1,5 +1,4 @@
-﻿
-@page "/administration"
+﻿@page "/administration"
 @using Defect_Tracker.Shared
 @inject HttpClient Http
 @inject IHttpClientFactory ClientFactory
@@ -11,9 +10,7 @@
     <div>
         <div id="target" style="height: 500px;">
             <SfGrid ID="Grid"
-
                     @ref="gridObj"
-
                     DataSource="@colDefects"
                     AllowPaging="true"
                     AllowSorting="true"
@@ -86,6 +83,29 @@
             </Content>
         </DialogTemplates>
     </SfDialog>
+    <SfDialog Target="#target"
+              Width="500px"
+              Height="500px"
+              IsModal="true"
+              ShowCloseIcon="true"
+              @bind-Visible="EditDialogVisibility">
+        <DialogTemplates>
+            <Header> EDIT DEFECT # @SelectedDefect.Id</Header>
+            <Content>
+                <EditDefect SelectedDefect="@SelectedDefect" />
+            </Content>
+            <FooterTemplate>
+                <div class="button-container">
+                    <button type="submit"
+                            class="e-btn e-normal e-primary"
+                            @onclick="SaveDefect">
+                        Save
+                    </button>
+                </div>
+            </FooterTemplate>
+        </DialogTemplates>
+    </SfDialog>
+
 
 </AuthorizeView>
 
@@ -110,6 +130,20 @@
 
     public async void OnCommandClicked(CommandClickEventArgs<Defect> args)
     {
+        if (args.CommandColumn.ButtonOption.Content == "Edit")
+        {
+            // Get the selected Defect.
+            SelectedDefect = await Http.GetFromJsonAsync<Defect>(
+            "Email?DefectGuid=" +
+           args.RowData.DefectGuid);
+
+            // Open the Edit dialog.
+            this.EditDialogVisibility = true;
+            StateHasChanged();
+        }
+
+
+
         if (args.CommandColumn.ButtonOption.Content == "Delete")
         {
             // We only need the TicketGuid
@@ -125,6 +159,22 @@
 
 
     }
+    public bool EditDialogVisibility { get; set; } = false;
+
+    public async Task SaveDefect()
+    {
+        // Update the selected Defect.
+        await Http.PutAsJsonAsync("Defect Tracker", SelectedDefect);
+
+        // Close the Edit dialog.
+        this.EditDialogVisibility = false;
+
+        // Refresh the SfGrid
+        // so the changes to the selected
+        // Help Desk Ticket are reflected.
+        gridObj.Refresh();
+    }
+
 
     public async void ConfirmDeleteYes()
     {

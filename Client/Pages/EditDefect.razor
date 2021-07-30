@@ -90,10 +90,13 @@
     protected override async Task OnInitializedAsync()
     {
         // Get the current user.
+
         CurrentUser = (await authenticationStateTask).User;
+
         // If there is a logged in user
         // they are an Administrator.
         // Enable editing.
+
         isReadOnly = !CurrentUser.Identity.IsAuthenticated;
     }
     private void AddHelpDeskTicketDetail()
