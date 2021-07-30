@@ -30,4 +30,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\EmailSender\" />
+  </ItemGroup>
+
 </Project>

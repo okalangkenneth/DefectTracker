@@ -26,8 +26,9 @@ namespace Defect_Tracker.Server
        
         public void ConfigureServices(IServiceCollection services)
         {
-            // To access Defect tables
-            services.AddDbContext<DefecttrackerContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+
+            services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>() // Add roles.
             .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -36,6 +37,7 @@ namespace Defect_Tracker.Server
             // Configure identity server to put the role claim into the id token
             // and the access token and prevent the default mapping for roles
             // in the JwtSecurityTokenHandler.
+
             services.AddIdentityServer()
             .AddApiAuthorization<ApplicationUser,ApplicationDbContext>(options =>
             {
@@ -43,6 +45,7 @@ namespace Defect_Tracker.Server
              options.IdentityResources["openid"].UserClaims.Add("role");
              options.ApiResources.Single().UserClaims.Add("role");
              });
+
             // Need to do this as it maps "role" to ClaimTypes.Role and causes issues.
             System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler
            .DefaultInboundClaimTypeMap.Remove("role");
@@ -55,6 +58,9 @@ namespace Defect_Tracker.Server
                     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddRazorPages();
+
+            // To access Defect Tracker tables
+            services.AddDbContext<DefecttrackerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
