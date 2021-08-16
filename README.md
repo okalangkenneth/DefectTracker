@@ -23,7 +23,7 @@ The application is built using client side Blazor and includes:
 
 ## General Information
  Defect Tracker allows users of a system to keep track of notable defects during the project development process.
- The time the defect was found and its decription are reported by the application user and the most urgent ones can be worked on first by the development team.  Defect Tracker can be customized to one's needs.This could be for example in tracking bugs in software development, in the manufacturing sector, or for delivery notifications.
+ The time the defect was found and its description are reported by the application user and the most urgent ones can be worked on first by the development team.  Defect Tracker can be customized to one's needs.This could be for example in tracking bugs in software development, in the manufacturing sector, or for delivery notifications.
 
 
 ## Technologies Used
