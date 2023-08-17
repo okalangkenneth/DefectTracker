@@ -20,7 +20,7 @@ Defect Tracker is an application that leverages the core elements of Blazor to b
  The time the defect was found and its description are reported by the application user and the most urgent ones can be worked on first by the development team.  Defect Tracker can be customized to one's needs.This could be for example in tracking bugs in software development, in the manufacturing sector, or for delivery notifications.
 
 ## Flow Chart
-![image](https://github.com/okalangkenneth/DotNetMicroservices_1/blob/master/Microservices_bg.png)
+![image](https://github.com/okalangkenneth/DefectTracker/blob/master/Defect%20Tracker.png))
 
  
 ## Technologies Used
